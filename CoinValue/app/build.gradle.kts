@@ -57,6 +57,7 @@ dependencies {
     //api coil
     implementation("io.coil-kt:coil:1.3.0")
 
+
     //implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
 }
