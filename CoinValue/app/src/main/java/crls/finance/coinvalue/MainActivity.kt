@@ -2,6 +2,7 @@ package crls.finance.coinvalue
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import crls.finance.coinvalue.databinding.ActivityMainBinding
@@ -13,39 +14,57 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+    //fazer a binding view
     private lateinit var binding : ActivityMainBinding
-
-    private var coinComboResult : Coin? = null
+    //variavel para taggar a resposta
     private val TAG = "CHECK_RESPONSE"
 
-    private var coinComboAsked = "EUR-USD"
-    private var coinComboNoBar = coinComboAsked.replace("-","")
+
+    val coinSuported = listOf("EUR-BRL", "BRL-EUR", "EUR-USD", "USD-EUR", "BTC-EUR", "BTC-USD", "BTC-BRL", "EUR-GBP", "GBP-EUR", "USD-GBP")
+    var coinComboAsked = "EUR-BRL"
+    var coinComboResult : Coin? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val client = RetrofitClient
-            .createService(MyApi::class.java).fetchCoins(coinComboAsked)//1 ou EURUSD
+        //Carregar o spinner com a lista de moedas possiveis
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, coinSuported)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerCoin.adapter = adapter
 
-        coinComboResult = getAllCoins(client)
 
-//        binding.buttonConvert.setOnClickListener {
-//            val moeda : String? = listCoins!![0].name
-//
-//            if (!moeda.isNullOrEmpty()) {
-//                binding.textView3.text = moeda!!
-//            }
-//            val euro = binding.editTextValue.text.toString().trim()
-//
-//            if (!euro.isEmpty()){
-//                val result = euro.toDouble()
-//                Toast.makeText(applicationContext,"$result", Toast.LENGTH_SHORT).show()
-//            }
-//        }
+
+        //CHECK_RESPONSE
+        //coinComboResult = getAllCoins(client)
+
+        binding.buttonConvert.setOnClickListener {
+            coinComboAsked = binding.spinnerCoin.selectedItem.toString().trim()
+
+            if (binding.editTextValue.text.isNullOrEmpty()) {
+                Toast.makeText(applicationContext,"Please insert a value to convert!", Toast.LENGTH_SHORT).show()
+            }
+            val value = binding.editTextValue.text.toString().toDouble()
+
+
+            if (value > 0.01){
+                val client = RetrofitClient
+                    .createService(MyApi::class.java).fetchCoins(coinComboAsked)
+                try {
+                    coinComboResult = getAllCoins(client)
+                    val result = value * coinComboResult!!.bid
+                    val coinOut = coinComboResult!!.codein
+                    Toast.makeText(applicationContext, "$result $coinOut", Toast.LENGTH_LONG).show()
+                } catch (e: Exception) {
+                    Toast.makeText(applicationContext, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
+
+
+
     private fun getAllCoins (call : Call<Map<String,Coin>>) : Coin?{
         var result : Coin? = null
         call.enqueue(object : Callback<Map<String,Coin>> {
@@ -55,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 if(response.isSuccessful) {
                     Log.d(TAG, "onResponse: ${response.body()}")
                     Toast.makeText(applicationContext, "OK", Toast.LENGTH_SHORT).show()
-                    result = response.body()!![coinComboNoBar]
+                    result = response.body()!![coinComboAsked.replace("-","")]
                 }
             }
             override fun onFailure(call: Call<Map<String,Coin>>, t: Throwable)
