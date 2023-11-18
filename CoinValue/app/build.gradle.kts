@@ -48,16 +48,13 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    //api retrofit permite nos usar get request p exemplo
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    //api moshi convert json em kotlin objects
-    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
-    //api retrofit with moshi
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    //api coil
-    implementation("io.coil-kt:coil:1.3.0")
+    // define a BOM and its version
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.11.0"))
 
+    // define any required OkHttp artifacts without version
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
 
-    //implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
 }

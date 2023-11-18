@@ -3,6 +3,7 @@ package crls.utility.shoppinglist
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import crls.utility.shoppinglist.databinding.ActivityProductDetailBinding
 
@@ -33,6 +34,7 @@ class ProductDetailActivity : AppCompatActivity() {
         binding = ActivityProductDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         intent.extras?.let{
             position = it.getInt(DATA_POSITION, -1)
             qtd = it.getInt(DATA_QTT)
@@ -40,9 +42,9 @@ class ProductDetailActivity : AppCompatActivity() {
             binding.editTextTextProductName.setText(name)
 
         }
-
         binding.buttonPlus.setOnClickListener{
             qtd += 1
+
         }
         binding.buttonMinus.setOnClickListener{
             qtd -= 1

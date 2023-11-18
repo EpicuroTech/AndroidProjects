@@ -33,6 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+
+    // ListViewArticles composicao
     inner class ArticlesAdapter : BaseAdapter() {
 
         override fun getCount(): Int {
@@ -60,6 +63,7 @@ class MainActivity : AppCompatActivity() {
 
             val urlToImage = articles[position].urlToImage
 
+            // testa se tem uma string e executa a função fetchimage
             urlToImage?.let {url->
                 Backend.fetchImage(lifecycleScope, url) { bitmap ->
                     imageViewArticle.setImageBitmap(bitmap)

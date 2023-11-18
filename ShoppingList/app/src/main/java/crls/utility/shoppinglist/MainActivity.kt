@@ -94,7 +94,5 @@ class MainActivity : AppCompatActivity() {
             }
             return rootView
         }
-
-
     }
 }

@@ -11,6 +11,7 @@ data class Article (
     val urlToImage   : String?,
     val publishedAt  : Date?
     ){
+    //companion permite executar a funcao sem instanciar objeto - comparavel com o static em CSharp
     companion object{
 
         //criar o objeto article através de um json object
