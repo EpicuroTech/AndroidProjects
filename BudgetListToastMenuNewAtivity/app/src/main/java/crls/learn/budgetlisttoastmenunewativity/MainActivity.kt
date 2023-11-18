@@ -47,6 +47,10 @@ class MainActivity : AppCompatActivity() {
     // 3.3 - adicionar os menu items
     // 3.4 - ir aos ficheiros teams tirar os .Noactionbar
     // 3.5 - Criar as funçoes do menu, onCreateOptionsMenu e onCreateItemSelected
+    // 4.0 - Editar um produto
+    // 4.1 - Adicionar setonclicklistner na rootview
+    // 4.2 - Alterações necessárias para o EDITAR
+    //
 
     // (1.4) - array do tipo lista com objetos do tipo budgetitem
     var budgetItems = arrayListOf<BudgetItem>(
@@ -72,9 +76,10 @@ class MainActivity : AppCompatActivity() {
                     val description = intent.extras?.getString(BudgetItemDetailActivity.DATA_NAME)?:""
                     val value = intent.extras?.getDouble(BudgetItemDetailActivity.DATA_VALUE)?:0.0
                     val date = Date()
-                    // necessário para carregar numa linha da lista
+
+                    // (4.2) - necessário para carregar numa linha da lista
                     val position = intent.extras?.getInt(BudgetItemDetailActivity.DATA_POSITION)?:-1
-                    // necessário para edição da linha, senão só o codigo do else
+                    // (4.2) - necessário para edição da linha, SENÃO só o codigo do else
                     if (position >= 0) {
                         budgetItems[position].description = description
                         budgetItems[position].value = value
@@ -150,6 +155,7 @@ class MainActivity : AppCompatActivity() {
             textViewValue.text = budgetItems[position].value.toString()
             textViewDate.text = budgetItems[position].date.toString()
 
+            // (4.1) - ao clicar na view abre a nova ativity
             rootView.setOnClickListener{
                 val intent = Intent(this@MainActivity,BudgetItemDetailActivity::class.java )
                 intent.putExtra(BudgetItemDetailActivity.DATA_NAME, budgetItems[position].description)

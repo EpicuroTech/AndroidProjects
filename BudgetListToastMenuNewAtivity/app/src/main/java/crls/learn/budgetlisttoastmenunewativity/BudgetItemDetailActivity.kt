@@ -9,9 +9,9 @@ import android.widget.EditText
 import crls.learn.budgetlisttoastmenunewativity.databinding.ActivityBudgetItemDetailBinding
 
 class BudgetItemDetailActivity : AppCompatActivity() {
-    // necessário para poder carregar numa linha da lista!!!
+    // (4.2) - necessário para poder carregar numa linha da lista!!!
     var position = -1
-    // permite que a variavél vá buscar valor a um campo e tbm atribuir valor a um campo
+    // (4.2) - permite que a variavél vá buscar valor a um campo e tbm atribuir valor a um campo
     var value : Double
         get(){
             return findViewById<EditText>(R.id.editTextValue).text.toString().toDouble()
@@ -29,6 +29,8 @@ class BudgetItemDetailActivity : AppCompatActivity() {
         val editTextName = findViewById<EditText>(R.id.editTextNome)
         val editTextValue = findViewById<EditText>(R.id.editTextValue)
 
+        // (4.2) - Necessário para o EDITAR uma linha da listview
+        //          carrega os dados na nova activity se existir intent.extras
         intent.extras?.let {
             position = it.getInt(DATA_POSITION,position)
             value = it.getDouble(DATA_VALUE)
@@ -40,6 +42,7 @@ class BudgetItemDetailActivity : AppCompatActivity() {
         //       e fecha a ativity trazendo os dados para a main.
         findViewById<Button>(R.id.buttonDone).setOnClickListener {
             val intent = Intent()
+            // (4.2) - posiçao é necessária para o editar
             intent.putExtra(DATA_POSITION, position)
             intent.putExtra(DATA_NAME,editTextName.text.toString())
             intent.putExtra(DATA_VALUE, value)
