@@ -11,10 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
+import crls.learn.budgetlisttoastmenunewativity.databinding.RowBudgetItemBinding
 import java.util.Date
 
 class MainActivity : AppCompatActivity() {
@@ -93,6 +97,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    //private lateinit var bindingRoot:RowBudgetItemBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +106,7 @@ class MainActivity : AppCompatActivity() {
         // (1.5) - atribuir ao listViewBudgetItem a listview do layout e atribuir o adapter.
         listViewBudgetItem = findViewById<ListView>(R.id.listViewBudgetItems)
         listViewBudgetItem.adapter = adapter
+
 
 
         // (2.4) - Declarar o que faz o botão add
@@ -146,25 +153,44 @@ class MainActivity : AppCompatActivity() {
         // devolver ao adapter
         // CADA LINHA DA LISTVIEW!!!!
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val rootView = layoutInflater.inflate(R.layout.row_budget_item,parent, false)
-            val textViewDescription = rootView.findViewById<TextView>(R.id.textViewDescription)
-            val textViewValue = rootView.findViewById<TextView>(R.id.textViewValue)
-            val textViewDate = rootView.findViewById<TextView>(R.id.textViewDate)
+            var bindingRoot = RowBudgetItemBinding.inflate(layoutInflater)
+            bindingRoot = RowBudgetItemBinding.inflate(layoutInflater)
 
-            textViewDescription.text = budgetItems[position].description
-            textViewValue.text = budgetItems[position].value.toString()
-            textViewDate.text = budgetItems[position].date.toString()
+            bindingRoot.textViewDescription.text = budgetItems[position].description
+            bindingRoot.textViewValue.text = budgetItems[position].value.toString()
+            bindingRoot.textViewDate.text = budgetItems[position].date.toString()
 
             // (4.1) - ao clicar na view abre a nova ativity
-            rootView.setOnClickListener{
+            bindingRoot.root.setOnClickListener{
                 val intent = Intent(this@MainActivity,BudgetItemDetailActivity::class.java )
                 intent.putExtra(BudgetItemDetailActivity.DATA_NAME, budgetItems[position].description)
                 intent.putExtra(BudgetItemDetailActivity.DATA_VALUE, budgetItems[position].value)
                 intent.putExtra(BudgetItemDetailActivity.DATA_POSITION, position)
                 resultLauncher.launch(intent)
             }
+//            if (!bindingRoot.checkBox.isChecked){
+//                findViewById<Button>(R.id.buttonSort).isClickable=false
+//            }
 
-            return rootView
+//            val rootView = layoutInflater.inflate(R.layout.row_budget_item,parent, false)
+//
+//            val textViewDescription = rootView.findViewById<TextView>(R.id.textViewDescription)
+//            val textViewValue = rootView.findViewById<TextView>(R.id.textViewValue)
+//            val textViewDate = rootView.findViewById<TextView>(R.id.textViewDate)
+//
+//            textViewDescription.text = budgetItems[position].description
+//            textViewValue.text = budgetItems[position].value.toString()
+//            textViewDate.text = budgetItems[position].date.toString()
+//
+//            rootView.setOnClickListener{
+//                val intent = Intent(this@MainActivity,BudgetItemDetailActivity::class.java )
+//                intent.putExtra(BudgetItemDetailActivity.DATA_NAME, budgetItems[position].description)
+//                intent.putExtra(BudgetItemDetailActivity.DATA_VALUE, budgetItems[position].value)
+//                intent.putExtra(BudgetItemDetailActivity.DATA_POSITION, position)
+//                resultLauncher.launch(intent)
+//            }
+//            return rootView
+            return bindingRoot.root
         }
     }
     // (3.5) - MENU
