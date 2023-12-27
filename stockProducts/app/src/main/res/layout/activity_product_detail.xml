@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductDetailActivity">
+
+    <EditText
+        android:id="@+id/editTextTextDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:ems="10"
+        android:hint="Product"
+        android:inputType="text"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTextQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:ems="10"
+        android:hint="Quantity in Stock "
+        android:inputType="number"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextDescription"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextDescription" />
+
+    <EditText
+        android:id="@+id/editTextTextMinimalQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Minimal Stock"
+        android:inputType="number"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextQuantity" />
+
+    <Button
+        android:id="@+id/buttonDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Done"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextMinimalQuantity"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextMinimalQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextMinimalQuantity" />
+</androidx.constraintlayout.widget.ConstraintLayout>
